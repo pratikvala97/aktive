@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<odoo>
+       <record id="rec_partner_view_wizard" model="ir.ui.view">
+           <field name="name">res.partner.record.tree</field>
+           <field name="model">res.partner</field>
+           <field name="arch" type="xml">
+               <form>
+                    <header>
+                        <button name="select_gold_partner" string="Add Gold Partner" class="btn-primary"/>
+                        <button string="Add Premium Partner" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary"/>
+                    </header>
+                      
+               </form>
+           </field>
+        </record>
+
+        <record id="contact_wizard" model="ir.actions.act_window">
+            <field name="name">Contacts Show</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,list,form</field>
+            <field name="view_id" ref="rec_partner_view_wizard"/>
+            <field name="target">new</field>
+           <!--  <field name="binding_model_id" ref="base.view_partner_tree"/>
+            <field name="binding_view_types">list</field>
+ -->
+        </record>
+
+
+        <menuitem id="contacts_premium_gold_wizard"
+        name="Wizard Tree"
+        action="contact_wizard"
+        parent="contacts.menu_contacts"
+        sequence="10"/>
+</odoo>

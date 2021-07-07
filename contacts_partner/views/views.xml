@@ -1,0 +1,90 @@
+<odoo>
+  <data>
+       <record id="view_partner_form_inherit" model="ir.ui.view">
+          <field name="name">res.partner.form.contact</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="base.view_partner_form"/>
+          <field name="arch" type="xml">
+             <xpath expr="//page[@name='internal_notes']" position="after">
+              <page name="partner" string="Partner">
+                  <group>
+                    <field name="gold_partner"/>                
+                  </group>
+                  <group>
+                      <field name="premium_partner"/>
+                  </group>  
+              </page>
+              </xpath>
+          </field>
+        </record>
+
+        <record id="contacts.action_contacts" model="ir.actions.act_window">
+          <field name="name">Contacts</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">res.partner</field>
+          <field name="view_mode">kanban,tree,form,activity</field>
+          <field name="search_view_id" ref="base.view_res_partner_filter"/>
+          <field name="context">{'default_is_company': True}</field>
+          <field name="domain">[('gold_partner', '=', False),('premium_partner', '=', False)]</field>
+          <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+              Create a contact in your address book
+            </p><p>
+              Odoo helps you to easily track all activities related to a customer.
+            </p>
+          </field>
+        </record>
+
+        <record id="action_gold_partner" model="ir.actions.act_window">
+          <field name="name">Gold Partner</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">res.partner</field>
+          <field name="view_mode">kanban,tree,form,activity</field>
+          <field name="search_view_id" ref="base.view_res_partner_filter"/>
+          <field name="context">{'default_is_company': True, 'default_gold_partner':True}</field>
+           <field name="domain">[('gold_partner', '=', True)]</field>
+        </record>
+
+<!-- ['|',('gold_partner', '=',False),('active','=', False)] -->
+       <!--  <record id="contacts.action_contacts" model="ir.actions.act_window">
+            <field name="domain">[('gold_partner', '=', True)]</field>
+        </record> -->
+        
+         <record id="action_premium_partner" model="ir.actions.act_window">
+          <field name="name">Premium Partner</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">res.partner</field>
+          <field name="view_mode">kanban,tree,form,activity</field>
+          <field name="search_view_id" ref="base.view_res_partner_filter"/>
+          <field name="context">{'default_is_company': True, 'default_premium_partner':True}</field>
+           <field name="domain">[('premium_partner', '=', True)]</field>
+        </record>
+
+   <!--      <record id="res_partner_view_tree" model="ir.ui.view">
+           <field name="name">res.partner.record.tree</field>
+           <field name="model">res.partner</field>
+           <field name="type">form</field>
+           <field name="arch" type="xml">
+               <form>
+                   <field name="res_partner_id"/>
+               </form>
+           </field>
+        </record> -->
+
+        <menuitem id="res_partner_menu_contacts_gold_partener"
+        name="Gold Partner"
+        action="action_gold_partner"
+        parent="contacts.menu_contacts"
+        sequence="6"/>
+
+
+        <menuitem id="res_partner_menu_contacts_premium_partener"
+        name="Premium Partner"
+        action="action_premium_partner"
+        parent="contacts.menu_contacts"
+        sequence="9"/>
+
+        
+
+  </data>
+</odoo>
